@@ -5,7 +5,7 @@ use num_traits::{
 };
 
 pub const fn size_of_bits<T>() -> usize {
-    size_of::<T>() * 8
+    core::mem::size_of::<T>() * 8
 }
 
 pub fn bit_width_mask<T>(bit_width: usize) -> T
