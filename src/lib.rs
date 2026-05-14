@@ -434,7 +434,18 @@ impl KISS {
     fn current(&self) -> u32 {
         (self.mwc.current() ^ self.cong.cong).wrapping_add(self.shr3.shr3)
     }
+
+    pub fn seed(&self) -> [u32; 4] {
+        [self.mwc.upper, self.mwc.lower, self.cong.cong, self.shr3.shr3]
+    }
 }
+
+impl From<[u32; 4]> for KISS {
+    fn from(value: [u32; 4]) -> Self {
+        KISS::new(value[0], value[1], value[2], value[3])
+    }
+}
+
 impl RngCore for KISS {
     fn next_u32(&mut self) -> u32 {
         self.mwc.next_u32();
